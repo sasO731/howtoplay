@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🟡 Server Status: ONLINE</title> <!-- Titlu inițial cu emoji galben -->
+  <title>🟡 Server Status: ONLINE</title>
   <style>
     body {
       margin: 0;
@@ -13,51 +13,18 @@
       text-align: center;
     }
 
-    /* Scoatem gradientul vechi ca să putem schimba culoarea simplu */
     h1 {
       font-size: 2.5em;
       margin-top: 30px;
       transition: color 0.5s ease;
     }
 
-    /* Efect pulsant verde pe fiecare literă */
     .status {
       font-weight: bold;
       margin: 10px 0;
       font-size: 1.5em;
       display: inline-flex;
       gap: 2px;
-    }
-
-    .status span {
-      animation: pulseGreen 2s infinite;
-      animation-timing-function: ease-in-out;
-      display: inline-block;
-    }
-
-    .status span:nth-child(1) { animation-delay: 0s; }
-    .status span:nth-child(2) { animation-delay: 0.2s; }
-    .status span:nth-child(3) { animation-delay: 0.4s; }
-    .status span:nth-child(4) { animation-delay: 0.6s; }
-    .status span:nth-child(5) { animation-delay: 0.8s; }
-    .status span:nth-child(6) { animation-delay: 1.0s; }
-    .status span:nth-child(7) { animation-delay: 1.2s; }
-    .status span:nth-child(8) { animation-delay: 1.4s; }
-    .status span:nth-child(9) { animation-delay: 1.6s; }
-    .status span:nth-child(10) { animation-delay: 1.8s; }
-    .status span:nth-child(11) { animation-delay: 2s; }
-    .status span:nth-child(12) { animation-delay: 2.2s; }
-    .status span:nth-child(13) { animation-delay: 2.4s; }
-    .status span:nth-child(14) { animation-delay: 2.6s; }
-    .status span:nth-child(15) { animation-delay: 2.8s; }
-
-    @keyframes pulseGreen {
-      0%, 100% {
-        color: #004d00; /* verde închis */
-      }
-      50% {
-        color: #00ff00; /* verde deschis */
-      }
     }
 
     .box, .link-box {
@@ -118,8 +85,8 @@
   </div>
 
   <div class="box">
-    <p class="status" id="serverStatus"></p> <!-- Animare text verde pulsant -->
-    
+    <p class="status" id="serverStatus"></p>
+
     <button class="button">
       <a href="https://example.com/vhost" target="_blank">Download VHOST</a>
     </button>
@@ -136,9 +103,14 @@
   <!-- ... restul codului tău ... -->
 
   <script>
-    // Animare Server Status: ONLINE pe fiecare literă cu verde pulsant
+    // Textul pentru server status
     const statusText = "Server Status: ONLINE";
     const statusContainer = document.getElementById("serverStatus");
+
+    // Culorile tale exact în ordinea cerută
+    const colors = ['yellow', 'red', 'cyan', 'green', 'orange', 'pink'];
+
+    // Creăm spanuri pentru fiecare literă
     statusContainer.innerHTML = "";
     for(let i = 0; i < statusText.length; i++) {
       const span = document.createElement("span");
@@ -146,11 +118,25 @@
       statusContainer.appendChild(span);
     }
 
+    let offset = 0;
+    const spans = statusContainer.querySelectorAll('span');
+
+    function updateColors() {
+      spans.forEach((span, i) => {
+        // Culoarea fiecărei litere depinde de offset + index litera, modulo nr culori
+        const colorIndex = (i + offset) % colors.length;
+        span.style.color = colors[colorIndex];
+      });
+      offset = (offset + 1) % colors.length;
+    }
+
+    // Apelăm funcția prima dată și apoi o repetăm la fiecare 300ms
+    updateColors();
+    setInterval(updateColors, 300);
+
     // Culorile pentru titlul paginii h1
-    const colors = ['yellow', 'red', 'cyan', 'green', 'orange', 'pink'];
     const pageTitle = document.getElementById('pageTitle');
     let colorIndex = 0;
-
     setInterval(() => {
       pageTitle.style.color = colors[colorIndex];
       colorIndex = (colorIndex + 1) % colors.length;
