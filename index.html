@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Server Status: ONLINE</title>  <!-- Schimbat titlul -->
+  <title>🟡 Server Status: ONLINE</title> <!-- Titlu inițial cu emoji galben -->
   <style>
     body {
       margin: 0;
@@ -13,26 +13,11 @@
       text-align: center;
     }
 
-    @keyframes rainbow {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
-    }
-
+    /* Scoatem gradientul vechi ca să putem schimba culoarea simplu */
     h1 {
       font-size: 2.5em;
-      background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet);
-      background-size: 1400% 1400%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: rainbow 10s ease infinite;
       margin-top: 30px;
+      transition: color 0.5s ease;
     }
 
     /* Efect pulsant verde pe fiecare literă */
@@ -40,7 +25,6 @@
       font-weight: bold;
       margin: 10px 0;
       font-size: 1.5em;
-      /* Flexbox ca să lucreze cu literele */
       display: inline-flex;
       gap: 2px;
     }
@@ -51,7 +35,6 @@
       display: inline-block;
     }
 
-    /* Delay pe fiecare literă ca să se schimbe individual */
     .status span:nth-child(1) { animation-delay: 0s; }
     .status span:nth-child(2) { animation-delay: 0.2s; }
     .status span:nth-child(3) { animation-delay: 0.4s; }
@@ -128,14 +111,14 @@
 </head>
 <body>
 
-  <h1>Crown PS</h1>
+  <h1 id="pageTitle">Crown PS</h1>
 
   <div class="box">
     <p><strong>Crown PS</strong> is one of the best Growtopia Private Servers with premium features, frequent updates, and an active community. Join us and feel the fun!</p>
   </div>
 
   <div class="box">
-    <p class="status" id="serverStatus"></p>  <!-- aici va fi textul animat -->
+    <p class="status" id="serverStatus"></p> <!-- Animare text verde pulsant -->
     
     <button class="button">
       <a href="https://example.com/vhost" target="_blank">Download VHOST</a>
@@ -150,22 +133,43 @@
     </button>
   </div>
 
-  <!-- restul codului tău rămâne la fel -->
+  <!-- ... restul codului tău ... -->
 
   <script>
-    // Textul "Server Status: ONLINE" împărțit în span-uri ca să putem anima literele individual
+    // Animare Server Status: ONLINE pe fiecare literă cu verde pulsant
     const statusText = "Server Status: ONLINE";
     const statusContainer = document.getElementById("serverStatus");
-
-    // Curățăm în caz că are ceva
     statusContainer.innerHTML = "";
-
-    // Pentru fiecare literă creăm un <span> cu animație delayată
     for(let i = 0; i < statusText.length; i++) {
       const span = document.createElement("span");
       span.textContent = statusText[i];
       statusContainer.appendChild(span);
     }
+
+    // Culorile pentru titlul paginii h1
+    const colors = ['yellow', 'red', 'cyan', 'green', 'orange', 'pink'];
+    const pageTitle = document.getElementById('pageTitle');
+    let colorIndex = 0;
+
+    setInterval(() => {
+      pageTitle.style.color = colors[colorIndex];
+      colorIndex = (colorIndex + 1) % colors.length;
+    }, 1000);
+
+    // Schimbare titlu tab browser cu emoji colorate
+    const titleColors = [
+      '🟡 Server Status: ONLINE',
+      '🔴 Server Status: ONLINE',
+      '🔵 Server Status: ONLINE',
+      '🟢 Server Status: ONLINE',
+      '🟠 Server Status: ONLINE',
+      '🌸 Server Status: ONLINE'
+    ];
+    let i = 0;
+    setInterval(() => {
+      document.title = titleColors[i];
+      i = (i + 1) % titleColors.length;
+    }, 1000);
   </script>
 
 </body>
