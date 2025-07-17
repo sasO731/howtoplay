@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🟡 Server Status: ONLINE</title>
+  <title>Server Status: ONLINE</title>
   <style>
     body {
       margin: 0;
@@ -17,6 +17,7 @@
       font-size: 2.5em;
       margin-top: 30px;
       user-select: none;
+      transition: color 1s ease;
     }
 
     .box, .link-box {
@@ -71,22 +72,21 @@
       font-weight: bold;
       margin: 10px 0;
       font-size: 1.5em;
-      display: inline-flex;
-      gap: 1px;
       user-select: none;
+      color: #004d00; /* culoare verde inchis implicit */
     }
   </style>
 </head>
 <body>
 
-  <h1 id="pageTitle"></h1>
+  <h1 id="pageTitle">Crown PS</h1>
 
   <div class="box">
     <p><strong>Crown PS</strong> is one of the best Growtopia Private Servers with premium features, frequent updates, and an active community. Join us and feel the fun!</p>
   </div>
 
   <div class="box">
-    <p class="status" id="serverStatus"></p>
+    <p class="status" id="serverStatus">Server Status: ONLINE</p>
 
     <button class="button">
       <a href="https://example.com/vhost" target="_blank">Download VHOST</a>
@@ -102,76 +102,53 @@
   </div>
 
   <script>
-    // Culori pentru titlu Crown PS (mai multe culori plăcute)
-    const colorsTitle = ['red', 'green', 'pink', 'cyan', 'orange', 'yellow', 'violet'];
-
-    const titleText = "Crown PS";
-    const pageTitle = document.getElementById('pageTitle');
-
-    // Creăm span pentru fiecare literă din titlu
-    function createTitleSpans() {
-      pageTitle.innerHTML = '';
-      for(let i = 0; i < titleText.length; i++) {
-        const span = document.createElement('span');
-        span.textContent = titleText[i];
-        span.style.color = colorsTitle[i % colorsTitle.length]; // culoare inițială variată
-        pageTitle.appendChild(span);
-      }
-    }
-    createTitleSpans();
-
-    const titleSpans = pageTitle.querySelectorAll('span');
-    let colorStep = 0;
-
-    function animateTitle() {
-      // Pentru fiecare literă, îi dăm o culoare diferită, offsetată cu colorStep
-      titleSpans.forEach((span, i) => {
-        // Culoarea pentru litera i este la index (i + colorStep) modulo lungimea paletei
-        const colorIndex = (i + colorStep) % colorsTitle.length;
-        span.style.color = colorsTitle[colorIndex];
-      });
-      colorStep = (colorStep + 1) % colorsTitle.length;
-    }
-
-    animateTitle();
-    setInterval(animateTitle, 1300);
-
-    // Pentru Server Status
-    const statusText = "Server Status: ONLINE";
-    const statusContainer = document.getElementById("serverStatus");
-
-    // Descompunem textul în spanuri
-    statusContainer.innerHTML = '';
-    for(let i = 0; i < statusText.length; i++) {
-      const span = document.createElement('span');
-      span.textContent = statusText[i];
-      statusContainer.appendChild(span);
-    }
-
-    const statusSpans = statusContainer.querySelectorAll('span');
-
-    // Culori verzi de la inchis la deschis
-    const greenShades = [
-      '#004d00',
-      '#006600',
-      '#008000',
-      '#00b300',
-      '#00e600',
-      '#33ff33'
+    // Paleta de culori pentru titlu: deschis și închis (perechi)
+    const colorPairs = [
+      ['#FF0000', '#800000'],  // rosu deschis / rosu inchis
+      ['#FF7F00', '#804000'],  // portocaliu deschis / portocaliu inchis
+      ['#FFFF00', '#808000'],  // galben deschis / galben inchis
+      ['#0000FF', '#000080'],  // albastru deschis / albastru inchis
+      ['#00FF00', '#008000']   // verde deschis / verde inchis
     ];
 
-    let statusOffset = 0;
+    const title = document.getElementById('pageTitle');
+    let colorIndex = 0;
+    let bright = true; // indicator daca suntem pe culoarea deschisa sau inchisa
 
-    function animateStatus() {
-      statusSpans.forEach((span, i) => {
-        let colorIndex = (i + statusOffset) % greenShades.length;
-        span.style.color = greenShades[colorIndex];
-      });
-      statusOffset = (statusOffset + 1) % greenShades.length;
+    function animateTitleColor() {
+      const [brightColor, darkColor] = colorPairs[colorIndex];
+
+      // Setăm culoarea titlului în funcție de bright (deschis sau inchis)
+      title.style.color = bright ? brightColor : darkColor;
+
+      if (!bright) {
+        // când s-a terminat de afișat culoarea inchisa, trecem la urmatoarea pereche
+        colorIndex = (colorIndex + 1) % colorPairs.length;
+      }
+
+      // inversăm bright pentru pasul următor
+      bright = !bright;
     }
 
-    animateStatus();
-    setInterval(animateStatus, 300);
+    animateTitleColor(); // apel inițial
+    setInterval(animateTitleColor, 1300); // schimbă culoarea la 1.3 secunde
+
+    // Pentru Server Status: culori gradient verde inchis → verde deschis, text complet
+
+    const statusContainer = document.getElementById("serverStatus");
+
+    const greenDark = '#004d00';
+    const greenLight = '#33ff33';
+
+    let statusBright = true;
+
+    function animateStatusColor() {
+      statusContainer.style.color = statusBright ? greenLight : greenDark;
+      statusBright = !statusBright;
+    }
+
+    animateStatusColor();
+    setInterval(animateStatusColor, 2000);  // schimbare mai lenta, la 2 secunde
 
   </script>
 
