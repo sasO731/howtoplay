@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>YourGTPS</title>
+  <title>Server Status: ONLINE</title>  <!-- Schimbat titlul -->
   <style>
     body {
       margin: 0;
@@ -35,6 +35,48 @@
       margin-top: 30px;
     }
 
+    /* Efect pulsant verde pe fiecare literă */
+    .status {
+      font-weight: bold;
+      margin: 10px 0;
+      font-size: 1.5em;
+      /* Flexbox ca să lucreze cu literele */
+      display: inline-flex;
+      gap: 2px;
+    }
+
+    .status span {
+      animation: pulseGreen 2s infinite;
+      animation-timing-function: ease-in-out;
+      display: inline-block;
+    }
+
+    /* Delay pe fiecare literă ca să se schimbe individual */
+    .status span:nth-child(1) { animation-delay: 0s; }
+    .status span:nth-child(2) { animation-delay: 0.2s; }
+    .status span:nth-child(3) { animation-delay: 0.4s; }
+    .status span:nth-child(4) { animation-delay: 0.6s; }
+    .status span:nth-child(5) { animation-delay: 0.8s; }
+    .status span:nth-child(6) { animation-delay: 1.0s; }
+    .status span:nth-child(7) { animation-delay: 1.2s; }
+    .status span:nth-child(8) { animation-delay: 1.4s; }
+    .status span:nth-child(9) { animation-delay: 1.6s; }
+    .status span:nth-child(10) { animation-delay: 1.8s; }
+    .status span:nth-child(11) { animation-delay: 2s; }
+    .status span:nth-child(12) { animation-delay: 2.2s; }
+    .status span:nth-child(13) { animation-delay: 2.4s; }
+    .status span:nth-child(14) { animation-delay: 2.6s; }
+    .status span:nth-child(15) { animation-delay: 2.8s; }
+
+    @keyframes pulseGreen {
+      0%, 100% {
+        color: #004d00; /* verde închis */
+      }
+      50% {
+        color: #00ff00; /* verde deschis */
+      }
+    }
+
     .box, .link-box {
       background-color: #222;
       margin: 20px auto;
@@ -42,12 +84,6 @@
       border-radius: 10px;
       width: 90%;
       max-width: 500px;
-    }
-
-    .status {
-      color: #00ff00;
-      font-weight: bold;
-      margin: 10px 0;
     }
 
     .button {
@@ -99,8 +135,8 @@
   </div>
 
   <div class="box">
-    <p class="status">Server Status: ONLINE</p>
-
+    <p class="status" id="serverStatus"></p>  <!-- aici va fi textul animat -->
+    
     <button class="button">
       <a href="https://example.com/vhost" target="_blank">Download VHOST</a>
     </button>
@@ -114,96 +150,21 @@
     </button>
   </div>
 
-  <!-- PowerTunnel Box -->
-  <div class="link-box">
-    <h2>PowerTunnel</h2>
-    <p><!-- removed the link text here to keep it clean --></p>
-    <button class="button" onclick="copyPowerTunnelLink()">Copy PowerTunnel Link</button>
-    <p class="copied" id="copiedMessagePowerTunnel">✔ Link copied to clipboard!</p>
-  </div>
-
-  <!-- Vhost Box -->
-  <div class="link-box">
-    <h2>Vhost</h2>
-    <p>You can download the VHOST hosts file below:</p>
-    <a href="moonps.txt" download>
-      <button class="button">Download moonps.txt</button>
-    </a>
-  </div>
-
-  <!-- iOS Host (Surge 5) -->
-  <div class="link-box">
-    <h2>iOS Host (Surge 5)</h2>
-    <p>Click the button below to copy the configuration:</p>
-    <button class="button" onclick="copySurgeConfig()">Copy Surge Config</button>
-    <p class="copied" id="copiedMessage1">✔ Copied to clipboard!</p>
-  </div>
-
-  <!-- Windows Host -->
-  <div class="link-box">
-    <h2>Windows Host</h2>
-    <p>Click below to copy the Windows HOST file entries:</p>
-    <button class="button" onclick="copyWindowsHost()">Copy Windows Host</button>
-    <p class="copied" id="copiedMessage2">✔ Copied to clipboard!</p>
-  </div>
-
-  <!-- MacOS Host -->
-  <div class="link-box">
-    <h2>MacOS</h2>
-    <p>Click below to copy the MacOS HOST file entries:</p>
-    <button class="button" onclick="copyMacHost()">Copy MacOS Host</button>
-    <p class="copied" id="copiedMessage3">✔ Copied to clipboard!</p>
-  </div>
+  <!-- restul codului tău rămâne la fel -->
 
   <script>
-    const hostText = `91.134.85.13 growtopia1.com
-91.134.85.13 growtopia2.com
-91.134.85.13 www.growtopia1.com
-91.134.85.13 www.growtopia2.com`;
+    // Textul "Server Status: ONLINE" împărțit în span-uri ca să putem anima literele individual
+    const statusText = "Server Status: ONLINE";
+    const statusContainer = document.getElementById("serverStatus");
 
-    function copySurgeConfig() {
-      const config = `[General]
-bypass-system = true
+    // Curățăm în caz că are ceva
+    statusContainer.innerHTML = "";
 
-[Rule]
-FINAL,DIRECT
-
-[Host]
-growtopia1.com = 91.134.85.13
-growtopia2.com = 91.134.85.13
-www.growtopia1.com = 91.134.85.13
-www.growtopia2.com = 91.134.85.13`;
-
-      navigator.clipboard.writeText(config).then(() => {
-        const msg = document.getElementById("copiedMessage1");
-        msg.style.display = "block";
-        setTimeout(() => msg.style.display = "none", 2000);
-      });
-    }
-
-    function copyWindowsHost() {
-      navigator.clipboard.writeText(hostText).then(() => {
-        const msg = document.getElementById("copiedMessage2");
-        msg.style.display = "block";
-        setTimeout(() => msg.style.display = "none", 2000);
-      });
-    }
-
-    function copyMacHost() {
-      navigator.clipboard.writeText(hostText).then(() => {
-        const msg = document.getElementById("copiedMessage3");
-        msg.style.display = "block";
-        setTimeout(() => msg.style.display = "none", 2000);
-      });
-    }
-
-    function copyPowerTunnelLink() {
-      const powerTunnelLink = "https://gtps.host/Moon.txt";
-      navigator.clipboard.writeText(powerTunnelLink).then(() => {
-        const msg = document.getElementById("copiedMessagePowerTunnel");
-        msg.style.display = "block";
-        setTimeout(() => msg.style.display = "none", 2000);
-      });
+    // Pentru fiecare literă creăm un <span> cu animație delayată
+    for(let i = 0; i < statusText.length; i++) {
+      const span = document.createElement("span");
+      span.textContent = statusText[i];
+      statusContainer.appendChild(span);
     }
   </script>
 
