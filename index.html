@@ -73,7 +73,7 @@
       margin: 10px 0;
       font-size: 1.5em;
       user-select: none;
-      color: #004d00; /* culoare verde inchis implicit */
+      color: #33ff33; /* VERDE DESCHIS constant */
     }
   </style>
 </head>
@@ -101,55 +101,116 @@
     </button>
   </div>
 
+  <div class="link-box">
+    <h2>PowerTunnel</h2>
+    <button class="button" onclick="copyPowerTunnel()">Copy Link</button>
+    <p class="copied" id="copiedMessage0">✔ Copied to clipboard!</p>
+  </div>
+
+  <div class="link-box">
+    <h2>Vhost</h2>
+    <p>You can download the VHOST hosts file below:</p>
+    <a href="moonps.txt" download>
+      <button class="button">Download moonps.txt</button>
+    </a>
+  </div>
+
+  <div class="link-box">
+    <h2>iOS Host (Surge 5)</h2>
+    <p>Click the button below to copy the configuration:</p>
+    <button class="button" onclick="copySurgeConfig()">Copy Surge Config</button>
+    <p class="copied" id="copiedMessage1">✔ Copied to clipboard!</p>
+  </div>
+
+  <div class="link-box">
+    <h2>Windows Host</h2>
+    <p>Click below to copy the Windows HOST file entries:</p>
+    <button class="button" onclick="copyWindowsHost()">Copy Windows Host</button>
+    <p class="copied" id="copiedMessage2">✔ Copied to clipboard!</p>
+  </div>
+
+  <div class="link-box">
+    <h2>MacOS</h2>
+    <p>Click below to copy the MacOS HOST file entries:</p>
+    <button class="button" onclick="copyMacHost()">Copy MacOS Host</button>
+    <p class="copied" id="copiedMessage3">✔ Copied to clipboard!</p>
+  </div>
+
   <script>
-    // Paleta de culori pentru titlu: deschis și închis (perechi)
+    const hostText = `91.134.85.13 growtopia1.com
+91.134.85.13 growtopia2.com
+91.134.85.13 www.growtopia1.com
+91.134.85.13 www.growtopia2.com`;
+
+    function copySurgeConfig() {
+      const config = `[General]
+bypass-system = true
+
+[Rule]
+FINAL,DIRECT
+
+[Host]
+growtopia1.com = 91.134.85.13
+growtopia2.com = 91.134.85.13
+www.growtopia1.com = 91.134.85.13
+www.growtopia2.com = 91.134.85.13`;
+
+      navigator.clipboard.writeText(config).then(() => {
+        const msg = document.getElementById("copiedMessage1");
+        msg.style.display = "block";
+        setTimeout(() => msg.style.display = "none", 2000);
+      });
+    }
+
+    function copyWindowsHost() {
+      navigator.clipboard.writeText(hostText).then(() => {
+        const msg = document.getElementById("copiedMessage2");
+        msg.style.display = "block";
+        setTimeout(() => msg.style.display = "none", 2000);
+      });
+    }
+
+    function copyMacHost() {
+      navigator.clipboard.writeText(hostText).then(() => {
+        const msg = document.getElementById("copiedMessage3");
+        msg.style.display = "block";
+        setTimeout(() => msg.style.display = "none", 2000);
+      });
+    }
+
+    function copyPowerTunnel() {
+      const link = "https://gtps.host/Moon.txt";
+      navigator.clipboard.writeText(link).then(() => {
+        const msg = document.getElementById("copiedMessage0");
+        msg.style.display = "block";
+        setTimeout(() => msg.style.display = "none", 2000);
+      });
+    }
+
+    // Animație culoare pentru titlu "Crown PS"
     const colorPairs = [
-      ['#FF0000', '#800000'],  // rosu deschis / rosu inchis
-      ['#FF7F00', '#804000'],  // portocaliu deschis / portocaliu inchis
-      ['#FFFF00', '#808000'],  // galben deschis / galben inchis
-      ['#0000FF', '#000080'],  // albastru deschis / albastru inchis
-      ['#00FF00', '#008000']   // verde deschis / verde inchis
+      ['#FF0000', '#800000'],  // roșu
+      ['#FF7F00', '#804000'],  // portocaliu
+      ['#FFFF00', '#808000'],  // galben
+      ['#0000FF', '#000080'],  // albastru
+      ['#00FF00', '#008000']   // verde
     ];
 
     const title = document.getElementById('pageTitle');
     let colorIndex = 0;
-    let bright = true; // indicator daca suntem pe culoarea deschisa sau inchisa
+    let bright = true;
 
     function animateTitleColor() {
       const [brightColor, darkColor] = colorPairs[colorIndex];
-
-      // Setăm culoarea titlului în funcție de bright (deschis sau inchis)
       title.style.color = bright ? brightColor : darkColor;
-
       if (!bright) {
-        // când s-a terminat de afișat culoarea inchisa, trecem la urmatoarea pereche
         colorIndex = (colorIndex + 1) % colorPairs.length;
       }
-
-      // inversăm bright pentru pasul următor
       bright = !bright;
     }
 
-    animateTitleColor(); // apel inițial
-    setInterval(animateTitleColor, 1300); // schimbă culoarea la 1.3 secunde
-
-    // Pentru Server Status: culori gradient verde inchis → verde deschis, text complet
-
-    const statusContainer = document.getElementById("serverStatus");
-
-    const greenDark = '#004d00';
-    const greenLight = '#33ff33';
-
-    let statusBright = true;
-
-    function animateStatusColor() {
-      statusContainer.style.color = statusBright ? greenLight : greenDark;
-      statusBright = !statusBright;
-    }
-
-    animateStatusColor();
-    setInterval(animateStatusColor, 2000);  // schimbare mai lenta, la 2 secunde
-
+    animateTitleColor();
+    setInterval(animateTitleColor, 1300);
   </script>
 
 </body>
