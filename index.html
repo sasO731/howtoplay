@@ -66,6 +66,15 @@
       color: #0f0;
       display: none;
     }
+
+    .status {
+      font-weight: bold;
+      margin: 10px 0;
+      font-size: 1.5em;
+      display: inline-flex;
+      gap: 1px;
+      user-select: none;
+    }
   </style>
 </head>
 <body>
@@ -93,51 +102,77 @@
   </div>
 
   <script>
-    const colors = ['yellow', 'red', 'cyan', 'green', 'orange', 'pink'];
+    // Culori pentru titlu Crown PS (mai multe culori plăcute)
+    const colorsTitle = ['red', 'green', 'pink', 'cyan', 'orange', 'yellow', 'violet'];
+
     const titleText = "Crown PS";
     const pageTitle = document.getElementById('pageTitle');
 
-    // Creăm span pentru fiecare literă
+    // Creăm span pentru fiecare literă din titlu
     function createTitleSpans() {
       pageTitle.innerHTML = '';
       for(let i = 0; i < titleText.length; i++) {
         const span = document.createElement('span');
         span.textContent = titleText[i];
-        // Setăm culoarea inițială pe galben
-        span.style.color = colors[0];
+        span.style.color = colorsTitle[i % colorsTitle.length]; // culoare inițială variată
         pageTitle.appendChild(span);
       }
     }
     createTitleSpans();
 
-    const spans = pageTitle.querySelectorAll('span');
-    let currentLetter = 0;
-    let currentColorIndex = 0;
+    const titleSpans = pageTitle.querySelectorAll('span');
+    let colorStep = 0;
 
     function animateTitle() {
-      // Reset culoare la toate literele la alb/gri (sau culoare implicită)
-      spans.forEach(span => span.style.color = 'white');
-
-      // Pentru litera curentă schimbăm culoarea conform colorIndex
-      spans[currentLetter].style.color = colors[currentColorIndex];
-
-      // Actualizăm culoarea pentru următorul pas
-      currentColorIndex = (currentColorIndex + 1) % colors.length;
-
-      // Trecem la următoarea literă (cu wrap)
-      currentLetter = (currentLetter + 1) % spans.length;
+      // Pentru fiecare literă, îi dăm o culoare diferită, offsetată cu colorStep
+      titleSpans.forEach((span, i) => {
+        // Culoarea pentru litera i este la index (i + colorStep) modulo lungimea paletei
+        const colorIndex = (i + colorStep) % colorsTitle.length;
+        span.style.color = colorsTitle[colorIndex];
+      });
+      colorStep = (colorStep + 1) % colorsTitle.length;
     }
 
-    // Animăm la fiecare 1.3 secunde
-    animateTitle(); // prima dată instant
+    animateTitle();
     setInterval(animateTitle, 1300);
 
-    // Pentru server status – doar text simplu verde (sau cum vrei)
+    // Pentru Server Status
+    const statusText = "Server Status: ONLINE";
     const statusContainer = document.getElementById("serverStatus");
-    statusContainer.textContent = "Server Status: ONLINE";
-    statusContainer.style.color = "#00ff00"; // verde simplu
-    statusContainer.style.fontWeight = "bold";
-    statusContainer.style.fontSize = "1.5em";
+
+    // Descompunem textul în spanuri
+    statusContainer.innerHTML = '';
+    for(let i = 0; i < statusText.length; i++) {
+      const span = document.createElement('span');
+      span.textContent = statusText[i];
+      statusContainer.appendChild(span);
+    }
+
+    const statusSpans = statusContainer.querySelectorAll('span');
+
+    // Culori verzi de la inchis la deschis
+    const greenShades = [
+      '#004d00',
+      '#006600',
+      '#008000',
+      '#00b300',
+      '#00e600',
+      '#33ff33'
+    ];
+
+    let statusOffset = 0;
+
+    function animateStatus() {
+      statusSpans.forEach((span, i) => {
+        let colorIndex = (i + statusOffset) % greenShades.length;
+        span.style.color = greenShades[colorIndex];
+      });
+      statusOffset = (statusOffset + 1) % greenShades.length;
+    }
+
+    animateStatus();
+    setInterval(animateStatus, 300);
+
   </script>
 
 </body>
