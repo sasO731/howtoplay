@@ -13,11 +13,25 @@
       text-align: center;
     }
 
+    @keyframes rainbow {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
     h1 {
       font-size: 2.5em;
-      background: linear-gradient(to right, #00ff00, #00c0ff);
+      background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet);
+      background-size: 1400% 1400%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      animation: rainbow 10s ease infinite;
       margin-top: 30px;
     }
 
