@@ -16,15 +16,7 @@
     h1 {
       font-size: 2.5em;
       margin-top: 30px;
-      transition: color 0.5s ease;
-    }
-
-    .status {
-      font-weight: bold;
-      margin: 10px 0;
-      font-size: 1.5em;
-      display: inline-flex;
-      gap: 2px;
+      user-select: none;
     }
 
     .box, .link-box {
@@ -78,7 +70,7 @@
 </head>
 <body>
 
-  <h1 id="pageTitle">Crown PS</h1>
+  <h1 id="pageTitle"></h1>
 
   <div class="box">
     <p><strong>Crown PS</strong> is one of the best Growtopia Private Servers with premium features, frequent updates, and an active community. Join us and feel the fun!</p>
@@ -100,62 +92,52 @@
     </button>
   </div>
 
-  <!-- ... restul codului tău ... -->
-
   <script>
-    // Textul pentru server status
-    const statusText = "Server Status: ONLINE";
-    const statusContainer = document.getElementById("serverStatus");
-
-    // Culorile tale exact în ordinea cerută
     const colors = ['yellow', 'red', 'cyan', 'green', 'orange', 'pink'];
-
-    // Creăm spanuri pentru fiecare literă
-    statusContainer.innerHTML = "";
-    for(let i = 0; i < statusText.length; i++) {
-      const span = document.createElement("span");
-      span.textContent = statusText[i];
-      statusContainer.appendChild(span);
-    }
-
-    let offset = 0;
-    const spans = statusContainer.querySelectorAll('span');
-
-    function updateColors() {
-      spans.forEach((span, i) => {
-        // Culoarea fiecărei litere depinde de offset + index litera, modulo nr culori
-        const colorIndex = (i + offset) % colors.length;
-        span.style.color = colors[colorIndex];
-      });
-      offset = (offset + 1) % colors.length;
-    }
-
-    // Apelăm funcția prima dată și apoi o repetăm la fiecare 300ms
-    updateColors();
-    setInterval(updateColors, 300);
-
-    // Culorile pentru titlul paginii h1
+    const titleText = "Crown PS";
     const pageTitle = document.getElementById('pageTitle');
-    let colorIndex = 0;
-    setInterval(() => {
-      pageTitle.style.color = colors[colorIndex];
-      colorIndex = (colorIndex + 1) % colors.length;
-    }, 1000);
 
-    // Schimbare titlu tab browser cu emoji colorate
-    const titleColors = [
-      '🟡 Server Status: ONLINE',
-      '🔴 Server Status: ONLINE',
-      '🔵 Server Status: ONLINE',
-      '🟢 Server Status: ONLINE',
-      '🟠 Server Status: ONLINE',
-      '🌸 Server Status: ONLINE'
-    ];
-    let i = 0;
-    setInterval(() => {
-      document.title = titleColors[i];
-      i = (i + 1) % titleColors.length;
-    }, 1000);
+    // Creăm span pentru fiecare literă
+    function createTitleSpans() {
+      pageTitle.innerHTML = '';
+      for(let i = 0; i < titleText.length; i++) {
+        const span = document.createElement('span');
+        span.textContent = titleText[i];
+        // Setăm culoarea inițială pe galben
+        span.style.color = colors[0];
+        pageTitle.appendChild(span);
+      }
+    }
+    createTitleSpans();
+
+    const spans = pageTitle.querySelectorAll('span');
+    let currentLetter = 0;
+    let currentColorIndex = 0;
+
+    function animateTitle() {
+      // Reset culoare la toate literele la alb/gri (sau culoare implicită)
+      spans.forEach(span => span.style.color = 'white');
+
+      // Pentru litera curentă schimbăm culoarea conform colorIndex
+      spans[currentLetter].style.color = colors[currentColorIndex];
+
+      // Actualizăm culoarea pentru următorul pas
+      currentColorIndex = (currentColorIndex + 1) % colors.length;
+
+      // Trecem la următoarea literă (cu wrap)
+      currentLetter = (currentLetter + 1) % spans.length;
+    }
+
+    // Animăm la fiecare 1.3 secunde
+    animateTitle(); // prima dată instant
+    setInterval(animateTitle, 1300);
+
+    // Pentru server status – doar text simplu verde (sau cum vrei)
+    const statusContainer = document.getElementById("serverStatus");
+    statusContainer.textContent = "Server Status: ONLINE";
+    statusContainer.style.color = "#00ff00"; // verde simplu
+    statusContainer.style.fontWeight = "bold";
+    statusContainer.style.fontSize = "1.5em";
   </script>
 
 </body>
