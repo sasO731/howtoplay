@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YourGTPS</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #111;
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      background: linear-gradient(to right, #00ff00, #00c0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-top: 30px;
+    }
+
+    .box, .link-box {
+      background-color: #222;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+    }
+
+    .status {
+      color: #00ff00;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .button {
+      background-color: #333;
+      color: white;
+      padding: 15px;
+      margin: 10px 0;
+      border: none;
+      width: 100%;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.3s;
+    }
+
+    .button:hover {
+      background-color: #444;
+    }
+
+    a {
+      color: #00c0ff;
+      text-decoration: none;
+    }
+
+    .link-box h2 {
+      margin: 0;
+      font-size: 1.5em;
+      color: #00c0ff;
+    }
+
+    .link-box p {
+      margin: 10px 0 0;
+      word-break: break-word;
+    }
+
+    .copied {
+      font-size: 0.9em;
+      color: #0f0;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>YourGTPS</h1>
+
+  <div class="box">
+    <p><strong>YourGTPS</strong> is one of the best Growtopia Private Servers with premium features, frequent updates, and an active community. Join us and feel the fun!</p>
+  </div>
+
+  <div class="box">
+    <p class="status">Server Status: ONLINE</p>
+
+    <button class="button">
+      <a href="https://example.com/vhost" target="_blank">Download VHOST</a>
+    </button>
+
+    <button class="button">
+      <a href="https://example.com/ptunnel.apk" target="_blank">Copy PTUNNEL (Android)</a>
+    </button>
+
+    <button class="button">
+      <a href="https://example.com/windows" target="_blank">Copy WINDOWS</a>
+    </button>
+  </div>
+
+  <!-- PowerTunnel Box -->
+  <div class="link-box">
+    <h2>PowerTunnel</h2>
+    <p><a href="https://gtps.host/Moon.txt" target="_blank">https://gtps.host/Moon.txt</a></p>
+  </div>
+
+  <!-- Vhost Box -->
+  <div class="link-box">
+    <h2>Vhost</h2>
+    <p>You can download the VHOST hosts file below:</p>
+    <a href="moonps.txt" download>
+      <button class="button">Download moonps.txt</button>
+    </a>
+  </div>
+
+  <!-- iOS Host (Surge 5) -->
+  <div class="link-box">
+    <h2>iOS Host (Surge 5)</h2>
+    <p>Click the button below to copy the configuration:</p>
+    <button class="button" onclick="copySurgeConfig()">Copy Surge Config</button>
+    <p class="copied" id="copiedMessage1">✔ Copied to clipboard!</p>
+  </div>
+
+  <!-- Windows Host -->
+  <div class="link-box">
+    <h2>Windows Host</h2>
+    <p>Click below to copy the Windows HOST file entries:</p>
+    <button class="button" onclick="copyWindowsHost()">Copy Windows Host</button>
+    <p class="copied" id="copiedMessage2">✔ Copied to clipboard!</p>
+  </div>
+
+  <!-- MacOS Host -->
+  <div class="link-box">
+    <h2>MacOS</h2>
+    <p>Click below to copy the MacOS HOST file entries:</p>
+    <button class="button" onclick="copyMacHost()">Copy MacOS Host</button>
+    <p class="copied" id="copiedMessage3">✔ Copied to clipboard!</p>
+  </div>
+
+  <script>
+    const hostText = `91.134.85.13 growtopia1.com
+91.134.85.13 growtopia2.com
+91.134.85.13 www.growtopia1.com
+91.134.85.13 www.growtopia2.com`;
+
+    function copySurgeConfig() {
+      const config = `[General]
+bypass-system = true
+
+[Rule]
+FINAL,DIRECT
+
+[Host]
+growtopia1.com = 91.134.85.13
+growtopia2.com = 91.134.85.13
+www.growtopia1.com = 91.134.85.13
+www.growtopia2.com = 91.134.85.13`;
+
+      navigator.clipboard.writeText(config).then(() => {
+        const msg = document.getElementById("copiedMessage1");
+        msg.style.display = "block";
+        setTimeout(() => msg.style.display = "none", 2000);
+      });
+    }
+
+    function copyWindowsHost() {
+      navigator.clipboard.writeText(hostText).then(() => {
+        const msg = document.getElementById("copiedMessage2");
+        msg.style.display = "block";
+        setTimeout(() => msg.style.display = "none", 2000);
+      });
+    }
+
+    function copyMacHost() {
+      navigator.clipboard.writeText(hostText).then(() => {
+        const msg = document.getElementById("copiedMessage3");
+        msg.style.display = "block";
+        setTimeout(() => msg.style.display = "none", 2000);
+      });
+    }
+  </script>
+
+</body>
+</html>
