@@ -1,336 +1,207 @@
-<!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8" />  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  <title>Server Status: ONLINE</title>  <style>
-  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Crown PS</title>
+  <style>
     body {
-  
       margin: 0;
-  
       background-color: #180;
-  
       font-family: Arial, sans-serif;
-  
       color: white;
-  
       text-align: center;
-  
+      animation: bgFade 5s infinite alternate;
     }
-  
 
-  
+    @keyframes bgFade {
+      0% { background-color: #180; }
+      100% { background-color: #000; }
+    }
+
     h1 {
-  
       font-size: 2.5em;
-  
       margin-top: 30px;
-  
       user-select: none;
-  
       transition: color 1s ease;
-  
     }
-  
 
-  
     .box, .link-box {
-  
       background-color: #222;
-  
       margin: 20px auto;
-  
       padding: 20px;
-  
       border-radius: 10px;
-  
       width: 90%;
-  
       max-width: 500px;
-  
     }
-  
 
-  
     .button {
-  
       background-color: #333;
-  
       color: white;
-  
       padding: 15px;
-  
       margin: 10px 0;
-  
       border: none;
-  
       width: 100%;
-  
       border-radius: 8px;
-  
       cursor: pointer;
-  
       font-size: 1em;
-  
       transition: background 0.3s;
-  
     }
-  
 
-  
     .button:hover {
-  
       background-color: #444;
-  
     }
-  
 
-  
     a {
-  
       color: #00c0ff;
-  
       text-decoration: none;
-  
     }
-  
 
-  
     .link-box h2 {
-  
       margin: 0;
-  
       font-size: 1.5em;
-  
       color: #00c0ff;
-  
     }
-  
 
-  
     .link-box p {
-  
       margin: 10px 0 0;
-  
       word-break: break-word;
-  
     }
-  
 
-  
     .copied {
-  
       font-size: 0.9em;
-  
       color: #0f0;
-  
       display: none;
-  
     }
-  
 
-  
     .status {
-  
       font-weight: bold;
-  
       margin: 10px 0;
-  
       font-size: 1.5em;
-  
       user-select: none;
-  
-      color: #33ff33; /* verde deschis constant */
-  
+      color: #ff3333; /* roșu pentru OFFLINE */
     }
-  
-  </style></head><body>  <h1 id="pageTitle">Crown PS</h1>  <div class="box"><p class="status" id="serverStatus">Server Status: ONLINE</p>
+  </style>
+</head>
+<body>
 
-  </div>  <div class="link-box"><h2>PowerTunnel</h2>
+  <h1 id="pageTitle">Crown PS</h1>
 
-<button class="button" onclick="copyPowerTunnel()">Copy Link</button>
+  <div class="box">
+    <p class="status" id="serverStatus">Server Status: OFFLINE</p>
+  </div>
 
-<p class="copied" id="copiedMessage0">✔ Copied to clipboard!</p>
+  <div class="link-box">
+    <h2>PowerTunnel</h2>
+    <button class="button" onclick="copyPowerTunnel()">Copy Link</button>
+    <p class="copied" id="copiedMessage0">✔ Copied to clipboard!</p>
+  </div>
 
-  </div>  <div class="link-box"><h2>Vhost</h2>
+  <div class="link-box">
+    <h2>Virtual Host</h2>
+    <p>You can download the Virtual Host file below:</p>
+    <a href="crownps.txt" download>
+      <button class="button">Download Virtual Host</button>
+    </a>
+  </div>
 
-<p>You can download the VHOST hosts file below:</p>
+  <div class="link-box">
+    <h2>iOS Host (Surge 5)</h2>
+    <p>Click the button below to copy the configuration:</p>
+    <button class="button" onclick="copySurgeConfig()">Copy Surge Config</button>
+    <p class="copied" id="copiedMessage1">✔ Copied to clipboard!</p>
+  </div>
 
-<a href="moonps.txt" download>
+  <div class="link-box">
+    <h2>Windows Host</h2>
+    <p>Click below to copy the Windows HOST file entries:</p>
+    <button class="button" onclick="copyWindowsHost()">Copy Windows Host</button>
+    <p class="copied" id="copiedMessage2">✔ Copied to clipboard!</p>
+  </div>
 
-  <button class="button">Download Virtual Host</button>
+  <div class="link-box">
+    <h2>MacOS</h2>
+    <p>Click below to copy the MacOS HOST file entries:</p>
+    <button class="button" onclick="copyMacHost()">Copy MacOS Host</button>
+    <p class="copied" id="copiedMessage3">✔ Copied to clipboard!</p>
+  </div>
 
-</a>
-
-  </div>  <div class="link-box"><h2>iOS Host (Surge 5)</h2>
-
-<p>Click the button below to copy the configuration:</p>
-
-<button class="button" onclick="copySurgeConfig()">Copy Surge Config</button>
-
-<p class="copied" id="copiedMessage1">✔ Copied to clipboard!</p>
-
-  </div>  <div class="link-box"><h2>Windows Host</h2>
-
-<p>Click below to copy the Windows HOST file entries:</p>
-
-<button class="button" onclick="copyWindowsHost()">Copy Windows Host</button>
-
-<p class="copied" id="copiedMessage2">✔ Copied to clipboard!</p>
-
-  </div>  <div class="link-box"><h2>MacOS</h2>
-
-<p>Click below to copy the MacOS HOST file entries:</p>
-
-<button class="button" onclick="copyMacHost()">Copy MacOS Host</button>
-
-<p class="copied" id="copiedMessage3">✔ Copied to clipboard!</p>
-
-  </div>  <script>
-  
+  <script>
     const hostText = `91.134.85.13 growtopia1.com
-  
 91.134.85.13 growtopia2.com
-  
 91.134.85.13 www.growtopia1.com
-  
 91.134.85.13 www.growtopia2.com`;
-  
 
-  
     function copySurgeConfig() {
-  
       const config = `[General]
-  
 bypass-system = true
-  
 
-  
 [Rule]
-  
 FINAL,DIRECT
-  
 
-  
 [Host]
-  
 growtopia1.com = 91.134.85.13
-  
 growtopia2.com = 91.134.85.13
-  
 www.growtopia1.com = 91.134.85.13
-  
 www.growtopia2.com = 91.134.85.13`;
-  
 
-  
       navigator.clipboard.writeText(config).then(() => {
-  
         const msg = document.getElementById("copiedMessage1");
-  
         msg.style.display = "block";
-  
         setTimeout(() => msg.style.display = "none", 2000);
-  
       });
-  
     }
-  
 
-  
     function copyWindowsHost() {
-  
       navigator.clipboard.writeText(hostText).then(() => {
-  
         const msg = document.getElementById("copiedMessage2");
-  
         msg.style.display = "block";
-  
         setTimeout(() => msg.style.display = "none", 2000);
-  
       });
-  
     }
-  
 
-  
     function copyMacHost() {
-  
       navigator.clipboard.writeText(hostText).then(() => {
-  
         const msg = document.getElementById("copiedMessage3");
-  
         msg.style.display = "block";
-  
         setTimeout(() => msg.style.display = "none", 2000);
-  
       });
-  
     }
-  
 
-  
     function copyPowerTunnel() {
-  
-      const link = "https://gtps.host/Moon.txt";
-  
+      const link = "https://gtps.host/Crown.txt"; // link-ul tău PowerTunnel
       navigator.clipboard.writeText(link).then(() => {
-  
         const msg = document.getElementById("copiedMessage0");
-  
         msg.style.display = "block";
-  
         setTimeout(() => msg.style.display = "none", 2000);
-  
       });
-  
     }
-  
 
-  
     // Animație culoare pentru titlu "Crown PS"
-  
     const colorPairs = [
-  
       ['#FF0000', '#800000'],  // roșu
-  
       ['#FF7F00', '#804000'],  // portocaliu
-  
       ['#FFFF00', '#808000'],  // galben
-  
       ['#0000FF', '#000080'],  // albastru
-  
       ['#00FF00', '#008000']   // verde
-  
     ];
-  
 
-  
     const title = document.getElementById('pageTitle');
-  
     let colorIndex = 0;
-  
     let bright = true;
-  
 
-  
     function animateTitleColor() {
-  
       const [brightColor, darkColor] = colorPairs[colorIndex];
-  
       title.style.color = bright ? brightColor : darkColor;
-  
       if (!bright) {
-  
         colorIndex = (colorIndex + 1) % colorPairs.length;
-  
       }
-  
       bright = !bright;
-  
     }
-  
 
-  
     animateTitleColor();
-  
     setInterval(animateTitleColor, 1300);
-  
-  </script></body></html>Acesta este linkul , eu când apas pe download virtual host nu mi se instaleaza
+  </script>
 
+</body>
+</html>
